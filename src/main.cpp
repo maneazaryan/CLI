@@ -115,6 +115,7 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
 {
 	if(v[0]=="add"){
 		if(v[1]=="window" && v.size()>=5){
+//krknvum e yndhanur mi ban anel
 			int id=std::stoi(v[2]);
 			int rowCount= std::stoi(v[3]);
 			int colCount= std::stoi(v[4]);
@@ -158,12 +159,40 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
 			Base* base = new Button(id, button, parentWindowId, row, col);
 		}
 	}
-	if(v[0]=="ctrl+c"){
+	else if(v[0]=="ctrl+C"){
 		quit=false;
 	}
+	else {
+		std::cout<<"Error: wrong command"<<std::endl;
+		return;
+	}
+}
+Window* getFirstWindow()
+{
+	bool correct=false;
+	std::vector<std::string> v= getCommandsLine();
+	do{
+		if(v[0]=="add" && v.size()==8)
+		{
+			int id=std::stoi(v[2]);
+			int rowCount= std::stoi(v[3]);
+			int colCount= std::stoi(v[4]);
+			int parentWindowId= std::stoi(v[5]);
+			int row= std::stoi(v[6]);
+			int col= std::stoi(v[7]);
+			Window* myFirstW=new Window(id,rowCount,colCount,parentWindowId,row,col);
+			correct=true;
+			return myFirstW;
+		}
+		else {
+			std::cout<<"Error: first command should be add_window"<<std::endl;
+		}
+	}while(!correct);
+	return nullptr;
 }
 void getCommands(){
 	commandsShow();
+
 	bool quit=true;
 	while(quit){
 	std::vector<std::string> v= getCommandsLine();
@@ -173,5 +202,6 @@ void getCommands(){
 }
 int main()
 {
+	getCommands();
 	return 0;
 }	
