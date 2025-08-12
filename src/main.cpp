@@ -8,6 +8,7 @@
 #include "table.h"
 #include "button.h"
 #include "command.h"
+#include "manage.h"
 
 /*class Base{
 	protected :
@@ -273,6 +274,7 @@ void getCommands(){
 } */
 int main()
 {
-	getCommands();
+	Manage m;
+	getCommands(m);
 	return 0;
 }	

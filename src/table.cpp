@@ -1,4 +1,5 @@
 #include "table.h"                 
-void AddElement(Base* base)
+void Table::Print(Base* base) const
 {
+	std::cout<<"Table : id "<<base->getId()<<std::endl;
 }

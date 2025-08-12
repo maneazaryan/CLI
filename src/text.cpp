@@ -1,4 +1,5 @@
 #include "text.h"
-void Text::AddElement(Base* base)
+void Text::Print(Base* base) const
 {
+	std::cout<<"Text : id "<<m_id<<std::endl;
 }

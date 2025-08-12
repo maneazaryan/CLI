@@ -7,7 +7,5 @@ class Table: public Base{
         public:
                 Table(int id, int tableRow, int tableCol, int pId, int row, int col ):
                         Base(id, row, col, pId), m_tableRow(tableRow), m_tableCol(tableCol) {}
-                virtual void AddElement(Base* base)override
-                {
-                }
+                virtual void Print(Base* base)const override;
 };

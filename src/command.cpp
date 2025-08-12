@@ -24,7 +24,7 @@ std::vector<std::string> getCommandsLine()
         }
         return commandsLine;
 }
-void doCommand(const std::vector<std::string>& v, bool& quit)
+void doCommand(const std::vector<std::string>& v,Manage& m , bool& quit)
 {
         if(v[0]=="add"){
                 if(v[1]=="window" && v.size()>=5){
@@ -34,9 +34,9 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
                         int colCount= std::stoi(v[4]);
                         if(v.size()==5){
                                 Base* base = new Window(id,rowCount,colCount);
-
-                                if(base->checkId(id)){
-                                        base->AddElement(base);
+				
+                                if(m.checkId(id)){
+                                        m.AddElement(base);
                                 }else{
                                         delete base;
                                 }
@@ -44,8 +44,8 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
                         else if(v.size()==6){
                                 int pId= std::stoi(v[5]);
                                 Base* base = new Window(id,rowCount,colCount,pId);
-                                if(base->checkId(id)){
-                                        base->AddElement(base);
+                                if(m.checkId(id)){
+                                        m.AddElement(base);
                                 }else{
                                         delete base;
                                 }
@@ -55,8 +55,8 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
                                 int row= std::stoi(v[6]);
                                 int col= std::stoi(v[7]);
                                 Base* base = new Window(id,rowCount,colCount,pId,row,col);
-                                if(base->checkId(id)){
-                                        base->AddElement(base);
+                                if(m.checkId(id)){
+                                        m.AddElement(base);
                                 }else{
                                         delete base;
                                 }
@@ -69,7 +69,7 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
                         int row= std::stoi(v[5]);
                         int col= std::stoi(v[6]);
                         Base* base = new Text(id, text,pId, row, col);
-                                base->AddElement(base);
+                                m.AddElement(base);
                 }
                 if(v[1]=="table" && v.size()==8){
                         int id=std::stoi(v[2]);
@@ -79,7 +79,7 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
                         int row= std::stoi(v[6]);
                         int col= std::stoi(v[7]);
                         Base* base = new Table(id,rowCount, colCount,pId, row, col);
-                                base->AddElement(base);
+                                m.AddElement(base);
                 }
                 if(v[1]=="button" && v.size()==7){
                         int id=std::stoi(v[2]);
@@ -88,7 +88,7 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
                         int row= std::stoi(v[5]);
                         int col= std::stoi(v[6]);
                         Base* base = new Button(id, button, pId, row, col);
-                                base->AddElement(base);
+                                m.AddElement(base);
                 }
         }
         else if(v[0]=="ctrl+C"){
@@ -99,7 +99,7 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
                 return;
         }
 }
-void getFirstWindow()
+void getFirstWindow(Manage& m)
 {
         bool correct=true;
         bool quitF=true;
@@ -110,11 +110,14 @@ void getFirstWindow()
                         int id=std::stoi(v[2]);
                         int rowCount= std::stoi(v[3]);
                         int colCount= std::stoi(v[4]);
-                        int pId= std::stoi(v[5]);
-                        int row= std::stoi(v[6]);
-                        int col= std::stoi(v[7]);
-                        Window* base=new Window(id,rowCount,colCount,pId,row,col);
-                        base->AddElement(base);
+                        if(v.size()==6){
+                        	int pId= std::stoi(v[5]);
+                        	Window* base=new Window(id,rowCount,colCount,pId);
+                        m.AddElement(base);
+			}else{
+                        	Window* base=new Window(id,rowCount,colCount);
+                        m.AddElement(base);
+			}
                         correct=true;
                 }
                 else if(v[0]=="ctrl+C"){
@@ -125,12 +128,12 @@ void getFirstWindow()
                 }
         }
 }
-void getCommands(){
+void getCommands(Manage& m){
         commandsShow();
-        getFirstWindow();
+        getFirstWindow(m);
         bool quit=true;
         while(quit){
         	std::vector<std::string> v= getCommandsLine();
-        	doCommand(v,quit);
+        	doCommand(v,m,quit);
 	}
 }

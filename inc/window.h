@@ -2,6 +2,7 @@
 #include <iostream>	
 #include <vector>
 #include "base.h"
+#include "manage.h"
 class Window: public Base{
         private:
                 int m_rowCount;
@@ -14,6 +15,5 @@ class Window: public Base{
                 Window(int id, int rowCount, int colCount, int pId):
                         Base( id, -1, -1, pId), m_rowCount(rowCount), m_colCount(colCount) {}
 
-                void AddElement(Base* base)override;
+		void Print(Base* base)const override;
 };
-
