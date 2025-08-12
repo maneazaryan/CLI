@@ -2,7 +2,14 @@
 #include <string>
 #include <vector>
 #include <sstream>
-class Base{
+#include "base.h"
+#include "window.h"
+#include "text.h"
+#include "table.h"
+#include "button.h"
+#include "command.h"
+
+/*class Base{
 	protected :
 		int m_id;
 		int m_row;
@@ -85,6 +92,7 @@ class Window: public Base{
 					}
 				}
 			}
+//code a poxvel, es masy nayel
 			Window* w =dynamic_cast<Window*>(base);
 			if(w==nullptr){
 				std::cout<<"Erorr::wrong pId"<<std::endl;
@@ -124,7 +132,8 @@ class Button: public Base{
 		virtual void AddElement(Base* base)override
 		{
 		}
-};
+}; */
+/*
 void commandsShow()
 {
 	std::cout<<"Command Line Application (CLI)"<<std::endl;
@@ -172,14 +181,22 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
 			else if(v.size()==6){
 				int pId= std::stoi(v[5]);
 				Base* base = new Window(id,rowCount,colCount,pId);
-				base->AddElement(base);
+				if(base->checkId(id)){
+					base->AddElement(base);
+				}else{
+					delete base;
+				}
 			}
 			else if(v.size()==8){
 				int pId= std::stoi(v[5]);
 				int row= std::stoi(v[6]);
 				int col= std::stoi(v[7]);
 				Base* base = new Window(id,rowCount,colCount,pId,row,col);
-				base->AddElement(base);
+				if(base->checkId(id)){
+					base->AddElement(base);
+				}else{
+					delete base;
+				}
 			}
 		}	
 		if(v[1]=="text" && v.size()==7){
@@ -214,7 +231,7 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
 	else if(v[0]=="ctrl+C"){
 		quit=false;
 	}
-	else {
+-	else {
 		std::cout<<"88Error: wrong command"<<std::endl;
 		return;
 	}
@@ -222,9 +239,10 @@ void doCommand(const std::vector<std::string>& v, bool& quit)
 void getFirstWindow()
 {
 	bool correct=true;
+	bool quitF=true;
 	while(correct){
 	std::vector<std::string> v= getCommandsLine();
-		if(v[0]=="add" && v.size()==8)
+		if(v[0]=="add" && (v.size()==5 || v.size()==6))
 		{
 			int id=std::stoi(v[2]);
 			int rowCount= std::stoi(v[3]);
@@ -236,8 +254,11 @@ void getFirstWindow()
 			base->AddElement(base);
 			correct=true;
 		}
+		else if(v[0]=="ctrl+C"){
+			quitF=false;
+		}
 		else {
-			std::cout<<"Error: first command should be add window"<<std::endl;
+			std::cout<<"Error: first command should be add window and doesn't have row and col"<<std::endl;
 		}
 	}
 }
@@ -249,7 +270,7 @@ void getCommands(){
 	std::vector<std::string> v= getCommandsLine();
 	doCommand(v,quit);
 }
-}
+} */
 int main()
 {
 	getCommands();
